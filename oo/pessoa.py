@@ -12,6 +12,15 @@ class Pessoa:
     def comprimentar(self):
         return f'Olá {id(self)}'
 
+    # metodo estatico com uso do decorator @staticmethod
+    @staticmethod
+    def metodo_estatico():
+        return 42
+
+    # metodo de class com uso de decorator @classmethod
+    @classmethod
+    def nome_e_atributos_de_classe(cls):
+        return f'{cls} - olhos {cls.olhos}'
 
 if __name__ == '__main__':
     jordan = Pessoa(nome='Jordan', idade=12)
@@ -40,8 +49,10 @@ if __name__ == '__main__':
     print(id(Pessoa.olhos), id(harold.olhos), id(jordan.olhos))
     print(harold.__dict__)
     print(jordan.__dict__)
-
-
+    # chamar do metodo estatico pela class ou pelo objeto
+    print(Pessoa.metodo_estatico(), harold.metodo_estatico())
+    # chamar do metodo de class pela class ou pelo objeto
+    print(Pessoa.nome_e_atributos_de_classe(), harold.nome_e_atributos_de_classe())
 
 
 
