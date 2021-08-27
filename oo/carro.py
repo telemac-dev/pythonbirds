@@ -12,7 +12,7 @@ Ele oferece os seguintes atributos:
 
 A Direção terá a responsabilidade de controlar a direção. Ela oferece
 os seguintes atributos:
-1) Valor de direção com valores possíveis: Norte, Sul, Lest, Oeste
+1) Valor de direção com valores possíveis: Norte, Sul, Leste, Oeste
 2) Método girar_a_direita
 3) Método girar_a_esquerda
   N
@@ -56,7 +56,7 @@ O   L
     >>> direcao.valor
     'Norte'
     >>> direcao.girar_a_esquerda()
-    >>>  direcao.valor
+    >>> direcao.valor
     'Oeste'
     >>> direcao.girar_a_esquerda()
     >>> direcao.valor
@@ -100,32 +100,57 @@ class Motor:
         self.velocidade += 1
 
     def frear(self):
-        if self.velocidade < 2:
-            self.velocidade = 0
-        else:
-            self.velocidade -= 2
-
+        #if self.velocidade < 2:
+        #    self.velocidade = 0
+        #else:
+        #    self.velocidade -= 2
+        self.velocidade -= 2
+        self.velocidade = max(0, self.velocidade)
 
 class Direcao:
     direcao = ('Norte', 'Leste', 'Sul', 'Oeste')
 
     def __init__(self):
-        self.valor = 0
+        self.valor = Direcao.direcao[0]
 
     def girar_a_direita(self):
-        if self.valor == 3:
-            self.valor = direcao[0]
+        if self.valor == 'Oeste':
+            self.valor = Direcao.direcao[0]
         else:
-            self.valor += 1
+            self.valor = Direcao.direcao[Direcao.direcao.index(self.valor)+1]
 
     def girar_a_esquerda(self):
-        if  self.valor == 0:
-            self.valor = 3
+        if  self.valor == 'Norte':
+            self.valor = Direcao.direcao[3]
         else:
-            self.valor -= 1
+            self.valor = Direcao.direcao[Direcao.direcao.index(self.valor)-1]
 
     def calcular_direcao(self):
         return direcao[self.valor]
+
+
+class Carro:
+    def __init__(self, direcao, motor):
+        self.direcao = direcao
+        self.motor = motor
+
+    def calcular_velocidade(self):
+        return self.motor.velocidade
+
+    def acelerar(self):
+        self.motor.acelerar()
+
+    def frear(self):
+        self.motor.frear()
+
+    def calcular_direcao(self):
+        return self.direcao.valor
+
+    def girar_a_direita(self):
+        self.direcao.girar_a_direita()
+
+    def girar_a_esquerda(self):
+        self.direcao.girar_a_esquerda()
 
 
 if __name__ == '__main__':
@@ -146,5 +171,37 @@ if __name__ == '__main__':
     # Testando a direção
     direcao = Direcao()
     print(direcao.valor)
+    direcao.girar_a_direita()
+    print(direcao.valor)
+    direcao.girar_a_direita()
+    print(direcao.valor)
+    direcao.girar_a_direita()
+    print(direcao.valor)
+    direcao.girar_a_direita()
+    print(direcao.valor)
 
+    direcao.girar_a_esquerda()
+    print(direcao.valor)
+    direcao.girar_a_esquerda()
+    print(direcao.valor)
+    direcao.girar_a_esquerda()
+    print(direcao.valor)
+    direcao.girar_a_esquerda()
+    print(direcao.valor)
 
+    #t Testando o carro
+    carro = Carro(direcao, motor)
+    print(carro.calcular_velocidade())
+    carro.acelerar()
+    print(carro.calcular_velocidade())
+    carro.acelerar()
+    print(carro.calcular_velocidade())
+    carro.frear()
+    print(carro.calcular_velocidade())
+    print(carro.calcular_direcao())
+    carro.girar_a_direita()
+    print(carro.calcular_direcao())
+    carro.girar_a_esquerda()
+    print(carro.calcular_direcao())
+    carro.girar_a_esquerda()
+    print(carro.calcular_direcao())
